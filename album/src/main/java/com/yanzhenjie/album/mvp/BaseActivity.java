@@ -29,6 +29,7 @@ import com.yanzhenjie.album.Album;
 import com.yanzhenjie.album.util.AlbumUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,15 +38,20 @@ import java.util.Locale;
  */
 public class BaseActivity extends AppCompatActivity implements Bye {
 
-    public static final String[] PERMISSION_TAKE_PICTURE = {"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
-    public static final String[] PERMISSION_TAKE_VIDEO = {"android.permission.CAMERA", "android.permission.RECORD_AUDIO", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
-    public static final String[] PERMISSION_STORAGE = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
+    public static String[] PERMISSION_TAKE_PICTURE = {"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
+    public static String[] PERMISSION_TAKE_VIDEO = {"android.permission.CAMERA", "android.permission.RECORD_AUDIO", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
+    public static String[] PERMISSION_STORAGE = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Locale locale = Album.getAlbumConfig().getLocale();
         AlbumUtils.applyLanguageForContext(this, locale);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            PERMISSION_TAKE_PICTURE = Arrays.copyOf(PERMISSION_TAKE_PICTURE,PERMISSION_TAKE_PICTURE.length -1);
+            PERMISSION_TAKE_VIDEO = Arrays.copyOf(PERMISSION_TAKE_VIDEO,PERMISSION_TAKE_VIDEO.length -1);
+            PERMISSION_STORAGE = Arrays.copyOf(PERMISSION_STORAGE,PERMISSION_STORAGE.length -1);
+        }
     }
 
     /**
