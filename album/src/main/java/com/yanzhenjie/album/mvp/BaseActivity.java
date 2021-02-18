@@ -38,9 +38,10 @@ import java.util.Locale;
  */
 public class BaseActivity extends AppCompatActivity implements Bye {
 
-    public static String[] PERMISSION_TAKE_PICTURE = {"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
-    public static String[] PERMISSION_TAKE_VIDEO = {"android.permission.CAMERA", "android.permission.RECORD_AUDIO", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
-    public static String[] PERMISSION_STORAGE = {"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"};
+    public static String WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE";
+    public static String[] PERMISSION_TAKE_PICTURE = {"android.permission.CAMERA", "android.permission.READ_EXTERNAL_STORAGE", WRITE_EXTERNAL_STORAGE};
+    public static String[] PERMISSION_TAKE_VIDEO = {"android.permission.CAMERA", "android.permission.RECORD_AUDIO", "android.permission.READ_EXTERNAL_STORAGE", WRITE_EXTERNAL_STORAGE};
+    public static String[] PERMISSION_STORAGE = {"android.permission.READ_EXTERNAL_STORAGE", WRITE_EXTERNAL_STORAGE};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,9 +49,15 @@ public class BaseActivity extends AppCompatActivity implements Bye {
         Locale locale = Album.getAlbumConfig().getLocale();
         AlbumUtils.applyLanguageForContext(this, locale);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            PERMISSION_TAKE_PICTURE = Arrays.copyOf(PERMISSION_TAKE_PICTURE,PERMISSION_TAKE_PICTURE.length -1);
-            PERMISSION_TAKE_VIDEO = Arrays.copyOf(PERMISSION_TAKE_VIDEO,PERMISSION_TAKE_VIDEO.length -1);
-            PERMISSION_STORAGE = Arrays.copyOf(PERMISSION_STORAGE,PERMISSION_STORAGE.length -1);
+            if (Arrays.asList(PERMISSION_TAKE_PICTURE).contains(WRITE_EXTERNAL_STORAGE)) {
+                PERMISSION_TAKE_PICTURE = Arrays.copyOf(PERMISSION_TAKE_PICTURE,PERMISSION_TAKE_PICTURE.length -1);
+            }
+            if (Arrays.asList(PERMISSION_TAKE_VIDEO).contains(WRITE_EXTERNAL_STORAGE)) {
+                PERMISSION_TAKE_VIDEO = Arrays.copyOf(PERMISSION_TAKE_VIDEO,PERMISSION_TAKE_VIDEO.length -1);
+            }
+            if (Arrays.asList(PERMISSION_STORAGE).contains(WRITE_EXTERNAL_STORAGE)) {
+                PERMISSION_STORAGE = Arrays.copyOf(PERMISSION_STORAGE,PERMISSION_STORAGE.length -1);
+            }
         }
     }
 

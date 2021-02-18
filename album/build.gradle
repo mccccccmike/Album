@@ -30,7 +30,7 @@ publish {
     userOrg = 'iwicfattis'
     groupId = 'com.iwicfattis'
     artifactId = 'album'
-    publishVersion = '0.6.1'
+    publishVersion = '0.6.2'
     desc = 'This is a forked 3rd party library that add android 11 supports'
     website = 'https://github.com/mccccccmike/Album'
 }
